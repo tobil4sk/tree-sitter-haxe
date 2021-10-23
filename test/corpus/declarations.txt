@@ -16,12 +16,50 @@ class Main<T,U> {}
 
 ---
 
-(module 
-  (class_declaration 
-    (keyword) 
-    (identifier) 
-    (type_param (identifier))
-    (type_param (identifier))
+(module
+  (class_declaration
+    (keyword)
+    (identifier)
+    (type_param (attribute (identifier)))
+    (type_param (attribute (identifier)))
+    (block)
+  )
+)
+
+===================
+class with inheritance
+===================
+
+class Main extends Other {}
+
+---
+
+(module
+  (class_declaration
+    (keyword)
+    (identifier)
+    (keyword)
+    (attribute (identifier))
+    (block)
+  )
+)
+
+===================
+class with multiple inheritance
+===================
+
+class Main extends Other extends YetAnother {}
+
+---
+
+(module
+  (class_declaration
+    (keyword)
+    (identifier)
+    (keyword)
+    (attribute (identifier))
+    (keyword)
+    (attribute (identifier))
     (block)
   )
 )
@@ -37,9 +75,9 @@ class Main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
       (function_declaration (keyword) (identifier) (block))
     )
   )
@@ -56,9 +94,9 @@ class Main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
       (function_declaration (keyword) (identifier) (block))
     )
   )
@@ -74,11 +112,11 @@ class Main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (function_declaration (keyword) (identifier) 
-        (function_arg (identifier)) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (function_declaration (keyword) (identifier)
+        (function_arg (identifier))
         (block)
       )
     )
@@ -95,12 +133,12 @@ class Main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (function_declaration (keyword) (identifier) 
-        (function_arg (identifier) (type) (literal (integer))) 
-        (function_arg (identifier) (type)) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (function_declaration (keyword) (identifier)
+        (function_arg (identifier) (type (identifier)) (literal (integer)))
+        (function_arg (identifier) (type (identifier)))
         (block)
       )
     )
@@ -109,7 +147,7 @@ class Main {
 
 
 ===================
-class function with attribute
+class function with metadata
 ===================
 
 class Main {
@@ -119,13 +157,13 @@ class Main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (function_declaration 
-        (attribute (identifier))
-        (keyword) 
-        (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (function_declaration
+        (metadata (identifier))
+        (keyword)
+        (identifier)
         (block)
       )
     )
@@ -142,9 +180,9 @@ class Main {
 }
 
 ---
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
       (function_declaration
       (keyword)
       (keyword)
@@ -163,18 +201,22 @@ class Main {
   function foo(){
     var x = 4;
     var y = 'test';
+    var z = new Type();
+    var a = Factory(1);
   }
 }
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (function_declaration (keyword) (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (function_declaration (keyword) (identifier)
         (block
           (variable_declaration (keyword) (identifier) (operator) (literal (integer)))
           (variable_declaration (keyword) (identifier) (operator) (literal (string)))
+          (variable_declaration (keyword) (identifier) (operator) (keyword) (call (attribute (identifier))))
+          (variable_declaration (keyword) (identifier) (operator) (call (attribute (identifier)) (literal (integer))))
         )
       )
     )
@@ -197,15 +239,15 @@ class Main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (function_declaration (keyword) (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (function_declaration (keyword) (identifier)
         (block
           (variable_declaration (keyword) (identifier))
           (variable_declaration (keyword) (identifier))
-          (identifier) (operator) (literal (integer))
-          (identifier) (operator) (identifier)
+          (attribute (identifier)) (operator) (literal (integer))
+          (attribute (identifier)) (operator) (attribute (identifier))
         )
       )
     )
@@ -223,7 +265,7 @@ class Main {
 
 ---
 
-(module 
+(module
   (class_declaration (keyword) (identifier)
     (block
       (variable_declaration
@@ -240,21 +282,20 @@ class variables with basic type
 ===================
 
 class Main {
-  public var x:Int; 
+  public var x:Int;
 }
 
 ---
 
-(module 
+(module
   (class_declaration (keyword) (identifier)
     (block
       (variable_declaration
-        (keyword) 
-        (keyword) 
+        (keyword)
+        (keyword)
         (identifier)
-        (type)
+        (type (identifier))
       )
     )
   )
 )
-

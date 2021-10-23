@@ -23,33 +23,58 @@ const haxe_grammar = {
     // Statements
     statement: ($) =>
       choice(
-        seq($.expression, choice($.block, $._semicolon)),
+        seq(
+          $.expression,
+          optional(seq(
+            '(',
+            repeat1(choice($.attribute, $.call, $.literal, $.operator)),
+            ')'
+          )),
+          choice($.block, $._semicolon)
+        ),
         $.import_statement,
         $.package_statement,
+        $.preprocessor_statement,
         $.declaration,
         seq(
-          $.identifier,
+          $.attribute,
           $.operator,
-          choice($.identifier, $.literal),
+          choice($.attribute, $.literal, $.call),
           optional($._semicolon)
         ),
-        seq($.operator, $.identifier, optional($._semicolon)),
-        seq($.identifier, $.operator, optional($._semicolon))
+        seq($.operator, $.attribute, optional($._semicolon)),
+        seq($.attribute, $.operator, optional($._semicolon)),
+        seq($.call, optional($._semicolon)),
       ),
 
     package_statement: ($) =>
       seq(
         alias('package', $.keyword),
-        field('name', $.identifier),
+        field('name', $.attribute),
         $._semicolon
       ),
 
     import_statement: ($) =>
       seq(
-        alias('import', $.keyword),
-        field('name', $.identifier),
+        choice(alias('import', $.keyword), alias('using', $.keyword)),
+        field('name', $.attribute),
         $._semicolon
       ),
+
+    preprocessor_statement: ($) =>
+      prec.right(seq(
+        '#',
+        choice(
+          seq(
+            token.immediate(choice('if', 'elseif',)),
+            choice(
+              seq(optional($.operator), choice($.identifier, $.literal)),
+              seq('(',repeat1(choice($.identifier, $.literal, $.operator)), ')'),
+            ),
+          ),
+          token.immediate(choice('else', 'end')),
+        ),
+      )),
 
     // Declarations
     declaration: ($) =>
@@ -61,18 +86,19 @@ const haxe_grammar = {
 
     class_declaration: ($) =>
       seq(
-        repeat($.attribute),
+        repeat($.metadata),
         alias('class', $.keyword),
         field('name', $.identifier),
         optional(seq('<', repeat(seq($.type_param, ',')), $.type_param, '>')),
+        optional(repeat(seq(alias('extends', $.keyword), field('parent', $.attribute)))),
         field('body', $.block)
       ),
 
-    type_param: ($) => $.identifier,
+    type_param: ($) => $.attribute,
 
     function_declaration: ($) =>
       seq(
-        repeat($.attribute),
+        repeat($.metadata),
         repeat($.keyword),
         alias('function', $.keyword),
         choice(
@@ -80,14 +106,14 @@ const haxe_grammar = {
           field('name', alias('new', $.identifier))
         ),
         seq('(', repeat(seq($.function_arg, optional(','))), ')'),
-        optional(seq(':', field('return_type', alias($.identifier, $.type)))),
+        optional(seq(':', field('return_type', alias($.attribute, $.type)))),
         field('body', $.block)
       ),
 
     function_arg: ($) =>
       seq(
         field('name', $.identifier),
-        optional(seq(':', alias($.identifier, $.type))),
+        optional(seq(':', alias($.attribute, $.type))),
         optional(seq($._assignmentOperator, $.literal))
       ),
 
@@ -96,22 +122,27 @@ const haxe_grammar = {
         repeat($.keyword),
         alias('var', $.keyword),
         field('name', $.identifier),
-        optional(seq(':', field('type', alias($.identifier, $.type)))),
-        optional(seq($.operator, $.literal)),
+        optional(seq(':', field('type', alias($.attribute, $.type)))),
+        optional(seq($.operator, choice($.literal, seq(optional(alias('new', $.keyword)), $.call)))),
         $._semicolon
       ),
     // Root tokens.
     block: ($) => seq('{', repeat($.statement), '}'),
 
-    attribute: ($) =>
+    metadata: ($) =>
       seq(
         choice('@', '@:'),
         field('name', $.identifier),
         optional(seq('(', $.literal, ')'))
       ),
 
-    // TODO: Add operators.
-    expression: ($) => prec.right(repeat1(choice($.keyword, $.identifier))),
+    expression: ($) =>
+      prec.right(choice(
+        repeat1(choice($.keyword, $.attribute)),
+        seq(alias('cast', $.keyword), '(', $.attribute, ',', field('type', alias($.attribute, $.type)), ')'),
+        seq('(', $.attribute, ':', field('type', alias($.attribute, $.type)), ')'),
+      )),
+
     // statement: ($) => seq($.expression, choice($.block, $._semicolon)),
     comment: ($) =>
       token(
@@ -120,8 +151,27 @@ const haxe_grammar = {
 
     keyword: ($) => prec.right(choice(...keywords)),
 
-    // TODO: Think about removing the . from this.
-    identifier: ($) => /[a-zA-Z_]+[a-zA-Z0-9\.]*/,
+    call: ($) =>
+      prec(1, seq(
+        field('name', $.attribute),
+        field('arguments_list', seq(
+          '(',
+          repeat(seq(
+            choice($.literal, $.attribute, $.call, $.operator),
+            optional(',')
+          )),
+          ')'
+        )),
+      )),
+
+    /* Selects one layer per field access. This looks gross in the tests, but allows for better highlighting in some
+       editors, as you can select both the first and last attribute via css selectors: */
+    attribute: ($) => seq(
+      optional(seq($.attribute, '.')),
+      $.identifier,
+    ),
+
+    identifier: ($) => /[a-zA-Z_]+[a-zA-Z0-9]*/,
 
     // From: https://haxe.org/manual/expression-literals.html
     literal: ($) => choice($.integer, $.float, $.string, $.bool, $.null),
@@ -140,7 +190,7 @@ const haxe_grammar = {
       ),
     _interpolated_block: ($) => seq('$', $.block),
     _interpolated_identifier: ($) =>
-      choice(seq('$', $.identifier), seq('${', $.identifier, '}')),
+      choice(seq('$', $.attribute), seq('${', $.attribute, '}')),
     //     _interpolated_expression: ($) => seq('$', seq('{', $.expression, '}')),
     string: ($) =>
       choice(
@@ -186,7 +236,7 @@ const haxe_grammar = {
         $._assignmentOperator
       ),
 
-    type: ($) => $.identifier,
+    type: ($) => $.attribute,
 
     // Hidden Nodes in tree.
     _semicolon: ($) => ';',

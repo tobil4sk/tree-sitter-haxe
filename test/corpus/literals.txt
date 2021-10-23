@@ -8,12 +8,12 @@ class main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
         (literal (integer))
       )
@@ -31,12 +31,12 @@ class main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
         (literal (integer))
       )
@@ -54,12 +54,12 @@ class main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
         (literal (float))
       )
@@ -77,12 +77,12 @@ class main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
         (literal (float))
       )
@@ -100,12 +100,12 @@ class main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
         (literal (float))
       )
@@ -123,12 +123,12 @@ class main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
         (literal (float))
         (ERROR (identifier))
@@ -147,12 +147,12 @@ class main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
         (literal (string))
       )
@@ -170,12 +170,12 @@ class main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
         (literal (string))
       )
@@ -194,20 +194,20 @@ class main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
         (literal (integer))
       )
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
-        (literal (string (interpolation (identifier))))
+        (literal (string (interpolation (attribute (identifier)))))
       )
     )
   )
@@ -224,20 +224,20 @@ class main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
         (literal (integer))
       )
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
-        (literal (string (interpolation (identifier))))
+        (literal (string (interpolation (attribute (identifier)))))
       )
     )
   )
@@ -255,23 +255,21 @@ class main {
 
 ---
 
-(module 
-  (class_declaration (keyword) (identifier) 
-    (block 
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+(module
+  (class_declaration (keyword) (identifier)
+    (block
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
         (literal (integer))
       )
-      (variable_declaration 
-        (keyword) 
-        (identifier) 
+      (variable_declaration
+        (keyword)
+        (identifier)
         (operator)
-        (literal (string (interpolation (identifier) (ERROR))))
+        (literal (string (interpolation (attribute (identifier)) (ERROR))))
       )
     )
   )
 )
-
-

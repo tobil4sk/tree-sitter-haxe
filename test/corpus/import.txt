@@ -6,7 +6,7 @@ import somePackage;
 
 ---
 
-(module (import_statement (keyword) (identifier)))
+(module (import_statement (keyword) (attribute (identifier))))
 
 ===================
 import statement with path
@@ -16,20 +16,28 @@ import my.other.package;
 
 ---
 
-(module (import_statement (keyword) (identifier)))
+(module
+  (import_statement (keyword)
+    (attribute
+      (attribute
+        (attribute (identifier))
+      (identifier))
+    (identifier))
+  )
+)
 
 ===================
 multiple import statements
 ===================
 
-import my.other.package;
 import banana;
-import test.other.SomeClass;
+import banana.bread;
+import banana.bread.pecan;
 
 ---
 
-(module 
-(import_statement (keyword) (identifier))
-(import_statement (keyword) (identifier))
-(import_statement (keyword) (identifier))
+(module
+(import_statement (keyword) (attribute (identifier)))
+(import_statement (keyword) (attribute (attribute (identifier)) (identifier)))
+(import_statement (keyword) (attribute (attribute (attribute (identifier)) (identifier)) (identifier)))
 )

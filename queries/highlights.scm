@@ -12,12 +12,12 @@
   "}" @punctuation.special
 ) @injection.content
 
-(attribute) @tag
-(attribute name: (identifier) @type) @tag
-(import_statement name: (identifier) @type)
-(package_statement name: (identifier) @type)
+(metadata) @tag
+(metadata name: (identifier) @type) @tag
+(import_statement name: (attribute) @type)
+(package_statement name: (attribute) @type)
 (class_declaration name: (identifier) @type)
-(class_declaration (type_param (identifier)) @type)
+(class_declaration (type_param (attribute)) @type)
 
 (function_declaration name: (identifier) @function)
 

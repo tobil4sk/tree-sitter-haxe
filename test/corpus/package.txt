@@ -6,7 +6,7 @@ package my;
 
 ---
 
-(module (package_statement (keyword) (identifier)))
+(module (package_statement (keyword) (attribute (identifier))))
 
 ===================
 Package Name with path
@@ -16,4 +16,4 @@ package my.other.package;
 
 ---
 
-(module (package_statement (keyword) (identifier)))
+(module (package_statement (keyword) (attribute (attribute (attribute (identifier)) (identifier)) (identifier))))
