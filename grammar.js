@@ -14,6 +14,7 @@ const haxe_grammar = {
   conflicts: ($) => [
     [$.function_declaration],
     [$.function_declaration, $.variable_declaration],
+    [$.function_declaration, $.keyword],
     [$._prefixUnaryOperator, $._arithmeticOperator],
     [$._prefixUnaryOperator, $._postfixUnaryOperator],
   ],
@@ -99,7 +100,8 @@ const haxe_grammar = {
     function_declaration: ($) =>
       seq(
         repeat($.metadata),
-        repeat($.keyword),
+        optional('final'),
+        repeat($.modifier),
         alias('function', $.keyword),
         choice(
           field('name', $.identifier),
@@ -110,6 +112,9 @@ const haxe_grammar = {
         field('body', $.block)
       ),
 
+    modifier: ($) =>
+      choice('public','private','static','dynamic','inline','macro','extern','override','overload','abstract'),
+
     function_arg: ($) =>
       seq(
         field('name', $.identifier),
@@ -119,7 +124,8 @@ const haxe_grammar = {
 
     variable_declaration: ($) =>
       seq(
-        repeat($.keyword),
+        repeat($.metadata),
+        repeat($.modifier),
         choice(alias('var', $.keyword), alias('final', $.keyword)),
         field('name', $.identifier),
         optional(seq(':', field('type', alias($.attribute, $.type)))),
@@ -127,7 +133,7 @@ const haxe_grammar = {
         $._semicolon
       ),
     // Root tokens.
-    block: ($) => seq('{', repeat($.statement), '}'),
+    block: ($) => choice($.statement, seq('{', repeat($.statement), '}')),
 
     metadata: ($) =>
       seq(

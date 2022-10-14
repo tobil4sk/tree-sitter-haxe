@@ -292,6 +292,10 @@
         {
           "type": "metadata",
           "named": true
+        },
+        {
+          "type": "modifier",
+          "named": true
         }
       ]
     }
@@ -407,6 +411,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "modifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "module",
@@ -617,6 +626,14 @@
         },
         {
           "type": "literal",
+          "named": true
+        },
+        {
+          "type": "metadata",
+          "named": true
+        },
+        {
+          "type": "modifier",
           "named": true
         },
         {

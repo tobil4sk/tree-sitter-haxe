@@ -547,10 +547,22 @@
           }
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "final"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "keyword"
+            "name": "modifier"
           }
         },
         {
@@ -665,6 +677,51 @@
         }
       ]
     },
+    "modifier": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "public"
+        },
+        {
+          "type": "STRING",
+          "value": "private"
+        },
+        {
+          "type": "STRING",
+          "value": "static"
+        },
+        {
+          "type": "STRING",
+          "value": "dynamic"
+        },
+        {
+          "type": "STRING",
+          "value": "inline"
+        },
+        {
+          "type": "STRING",
+          "value": "macro"
+        },
+        {
+          "type": "STRING",
+          "value": "extern"
+        },
+        {
+          "type": "STRING",
+          "value": "override"
+        },
+        {
+          "type": "STRING",
+          "value": "overload"
+        },
+        {
+          "type": "STRING",
+          "value": "abstract"
+        }
+      ]
+    },
     "function_arg": {
       "type": "SEQ",
       "members": [
@@ -732,7 +789,14 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "keyword"
+            "name": "metadata"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "modifier"
           }
         },
         {
@@ -855,22 +919,31 @@
       ]
     },
     "block": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
-          "type": "STRING",
-          "value": "{"
+          "type": "SYMBOL",
+          "name": "statement"
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "statement"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "}"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "{"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "statement"
+              }
+            },
+            {
+              "type": "STRING",
+              "value": "}"
+            }
+          ]
         }
       ]
     },
@@ -1073,10 +1146,6 @@
         "members": [
           {
             "type": "STRING",
-            "value": "abstract"
-          },
-          {
-            "type": "STRING",
             "value": "break"
           },
           {
@@ -1109,10 +1178,6 @@
           },
           {
             "type": "STRING",
-            "value": "dynamic"
-          },
-          {
-            "type": "STRING",
             "value": "else"
           },
           {
@@ -1122,10 +1187,6 @@
           {
             "type": "STRING",
             "value": "extends"
-          },
-          {
-            "type": "STRING",
-            "value": "extern"
           },
           {
             "type": "STRING",
@@ -1161,15 +1222,7 @@
           },
           {
             "type": "STRING",
-            "value": "inline"
-          },
-          {
-            "type": "STRING",
             "value": "interface"
-          },
-          {
-            "type": "STRING",
-            "value": "macro"
           },
           {
             "type": "STRING",
@@ -1185,31 +1238,11 @@
           },
           {
             "type": "STRING",
-            "value": "overload"
-          },
-          {
-            "type": "STRING",
-            "value": "override"
-          },
-          {
-            "type": "STRING",
             "value": "package"
           },
           {
             "type": "STRING",
-            "value": "private"
-          },
-          {
-            "type": "STRING",
-            "value": "public"
-          },
-          {
-            "type": "STRING",
             "value": "return"
-          },
-          {
-            "type": "STRING",
-            "value": "static"
           },
           {
             "type": "STRING",
@@ -1796,6 +1829,10 @@
     [
       "function_declaration",
       "variable_declaration"
+    ],
+    [
+      "function_declaration",
+      "keyword"
     ],
     [
       "_prefixUnaryOperator",

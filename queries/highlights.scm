@@ -20,8 +20,19 @@
 (class_declaration (type_param (attribute)) @type)
 
 (function_declaration name: (identifier) @function)
+; (function_declaration modifiers: (keyword) @keyword)
 
-; (variable_declaration name: (identifier) @number)
+(modifier) @emphasis
+
+((identifier) @type.builtin
+ (#any-of? @type.builtin
+              "Any" "Array" "ArrayAccess" "Bool" "Class" "Date" "DateTools" "Dynamic" "Enum" "EnumValue" "EReg"
+              "Float" "IMap" "Int" "IntIterator" "Iterable" "Iterator" "KeyValueIterator" "KeyValueIterable"
+              "Lambda" "List" "ListIterator" "ListNode" "Map" "Math" "Null" "Reflect" "Single" "Std" "String"
+              "StringBuf" "StringTools" "Sys" "Type" "UInt" "UnicodeString" "ValueType" "Void" "Xml" "XmlType"
+))
+
+(variable_declaration name: (identifier) @variable)
 ; (variable_declaration (type) @type)
 ; (increment_operator) @operator
 ; (decrement_operator) @operator
